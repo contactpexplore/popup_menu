@@ -10,8 +10,8 @@ import 'triangle_painter.dart';
 abstract class MenuItemProvider {
   String get menuTitle;
   Widget get menuImage;
+  Widget get widget;
   TextStyle get menuTextStyle;
-  TextAlign get menuTextAlign;
 }
 
 class MenuItem extends MenuItemProvider {
@@ -19,10 +19,10 @@ class MenuItem extends MenuItemProvider {
   String title; // 菜单标题
   var userInfo; // 额外的菜单荐信息
   TextStyle textStyle;
-  TextAlign textAlign;
-
-  MenuItem({this.title, this.image, this.userInfo, this.textStyle, this.textAlign});
-
+  Widget widget;
+  MenuItem({this.title, this.image, this.userInfo, this.textStyle,this.widget});
+  @override
+  Widget get widget => widget;
   @override
   Widget get menuImage => image;
 
@@ -32,10 +32,6 @@ class MenuItem extends MenuItemProvider {
   @override
   TextStyle get menuTextStyle =>
       textStyle ?? TextStyle(color: Color(0xffc5c5c5), fontSize: 10.0);
-  
-  @override
-  TextAlign get menuTextAlign =>
-      textAlign ?? TextAlign.center;  
 }
 
 enum MenuType { big, oneLine }
@@ -445,7 +441,10 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   }
 
   Widget _createContent() {
-    if (widget.item.menuImage != null) {
+     if (widget.item.widget){
+       return widget.item.widget;
+     }
+    else if (widget.item.menuImage != null) {
       // image and text
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -476,7 +475,6 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
             child: Text(
               widget.item.menuTitle,
               style: widget.item.menuTextStyle,
-              textAlign: widget.item.menuTextAlign,
             ),
           ),
         ),
