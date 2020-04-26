@@ -5,12 +5,13 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'triangle_painter.dart';
 
 abstract class MenuItemProvider {
   String get menuTitle;
   Widget get menuImage;
-  Widget get menuWidget;
+  Widget get widget;
   TextStyle get menuTextStyle;
 }
 
@@ -22,7 +23,7 @@ class MenuItem extends MenuItemProvider {
   Widget widget;
   MenuItem({this.title, this.image, this.userInfo, this.textStyle,this.widget});
   @override
-  Widget get menuWidget => widget;
+  Widget get widget => widget;
   @override
   Widget get menuImage => image;
 
@@ -98,7 +99,7 @@ class PopupMenu {
     this.stateChanged = stateChanged;
     this.items = items;
     this._maxColumn = maxColumn ?? 4;
-    this._backgroundColor = backgroundColor ?? Color(0xff232323);
+    this._backgroundColor = backgroundColor ?? context!=null ? CupertinoTheme.of(context).barBackgroundColor:Color(0xff232323);
     this._lineColor = lineColor ?? Color(0xff353535);
     this._highlightColor = highlightColor ?? Color(0x55000000);
     if (context != null) {
@@ -441,8 +442,8 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   }
 
   Widget _createContent() {
-     if (widget.item.menuWidget!=null){
-       return widget.item.menuWidget;
+     if (widget.item.widget){
+       return widget.item.widget;
      }
     else if (widget.item.menuImage != null) {
       // image and text
