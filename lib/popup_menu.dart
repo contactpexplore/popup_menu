@@ -5,7 +5,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'triangle_painter.dart';
 
 abstract class MenuItemProvider {
@@ -79,7 +78,8 @@ class PopupMenu {
   Color _backgroundColor;
   Color _highlightColor;
   Color _lineColor;
-
+  
+  void set backgroundColor(x)=> _backgroundColor=x;
   /// It's showing or not.
   bool _isShow = false;
   bool get isShow => _isShow; 
@@ -99,7 +99,7 @@ class PopupMenu {
     this.stateChanged = stateChanged;
     this.items = items;
     this._maxColumn = maxColumn ?? 4;
-    this._backgroundColor = backgroundColor ?? context!=null ? CupertinoTheme.of(context).barBackgroundColor:Color(0xff232323);
+    this._backgroundColor = backgroundColor ?? Color(0xff232323);
     this._lineColor = lineColor ?? Color(0xff353535);
     this._highlightColor = highlightColor ?? Color(0x55000000);
     if (context != null) {
