@@ -10,7 +10,7 @@ import 'triangle_painter.dart';
 abstract class MenuItemProvider {
   String get menuTitle;
   Widget get menuImage;
-  Widget get widget;
+  Widget get menuWidget;
   TextStyle get menuTextStyle;
 }
 
@@ -22,7 +22,7 @@ class MenuItem extends MenuItemProvider {
   Widget widget;
   MenuItem({this.title, this.image, this.userInfo, this.textStyle,this.widget});
   @override
-  Widget get widget => widget;
+  Widget get menuWidget => widget;
   @override
   Widget get menuImage => image;
 
@@ -78,8 +78,7 @@ class PopupMenu {
   Color _backgroundColor;
   Color _highlightColor;
   Color _lineColor;
-  
-  void set backgroundColor(x)=> _backgroundColor=x;
+  void set color(x)=> _backgroundColor=x;
   /// It's showing or not.
   bool _isShow = false;
   bool get isShow => _isShow; 
@@ -442,8 +441,8 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   }
 
   Widget _createContent() {
-     if (widget.item.widget){
-       return widget.item.widget;
+     if (widget.item.menuWidget!=null){
+       return widget.item.menuWidget;
      }
     else if (widget.item.menuImage != null) {
       // image and text
